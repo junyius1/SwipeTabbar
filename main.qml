@@ -38,17 +38,26 @@ ApplicationWindow {
 //            text: qsTr("Page 2")
 //        }
 //    }
+    Component {
+        id: _newTab
+        TabButton {
+            property string title: ""
+
+            text: title
+            width: Math.max(100, tabBar.width / 6)
+        }
+    }
     TabBar {
         id: tabBar
         width: parent.width
          currentIndex: swipeView.currentIndex
 
         Repeater {
-            model: ["First", "Second", "Third", "Fourth", "Fifth", "six"]
+        }
 
-            TabButton {
-                text: modelData
-                width: Math.max(100, tabBar.width / 6)
+        Component.onCompleted: {
+            for(var i =0; i< 6; i++){
+                tabBar.addItem(_newTab.createObject(tabBar, {title: "hello_"+i}))
             }
         }
     }
